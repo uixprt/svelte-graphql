@@ -23,6 +23,18 @@ export type Article = {
   title?: Maybe<Scalars['String']>;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addArticle?: Maybe<Article>;
+};
+
+
+export type MutationAddArticleArgs = {
+  author: Scalars['String'];
+  content: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   articleBySlug?: Maybe<Article>;
@@ -33,6 +45,15 @@ export type Query = {
 export type QueryArticleBySlugArgs = {
   slug: Scalars['String'];
 };
+
+export type AddArticleMutationVariables = Exact<{
+  title: Scalars['String'];
+  content: Scalars['String'];
+  author: Scalars['String'];
+}>;
+
+
+export type AddArticleMutation = { __typename?: 'Mutation', addArticle?: { __typename?: 'Article', slug?: string | null, title?: string | null, content?: string | null, author?: string | null } | null };
 
 export type ArticleBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
@@ -47,6 +68,16 @@ export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 export type ArticlesQuery = { __typename?: 'Query', articles?: Array<{ __typename?: 'Article', title?: string | null, slug?: string | null, content?: string | null, author?: string | null } | null> | null };
 
 
+export const AddArticleDocument = gql`
+    mutation addArticle($title: String!, $content: String!, $author: String!) {
+  addArticle(title: $title, content: $content, author: $author) {
+    slug
+    title
+    content
+    author
+  }
+}
+    `;
 export const ArticleBySlugDocument = gql`
     query ArticleBySlug($slug: String!) {
   articleBySlug(slug: $slug) {
@@ -66,5 +97,6 @@ export const ArticlesDocument = gql`
   }
 }
     `;
+export type AddArticleMutationStore = OperationStore<AddArticleMutation, AddArticleMutationVariables>;
 export type ArticleBySlugQueryStore = OperationStore<ArticleBySlugQuery, ArticleBySlugQueryVariables>;
 export type ArticlesQueryStore = OperationStore<ArticlesQuery, ArticlesQueryVariables>;

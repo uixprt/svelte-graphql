@@ -12,6 +12,10 @@ const typeDefs = gql`
 		articles: [Article]
 		articleBySlug(slug: String!): Article
 	}
+
+	type Mutation {
+		addArticle(title: String!, content: String!, author: String!): Article
+	}
 `;
 
 const articles = [
@@ -34,6 +38,21 @@ const resolvers = {
 		articles: () => articles,
 		articleBySlug: (_: unknown, { slug }: { slug: string }) =>
 			articles.find((article) => article.slug === slug)
+	},
+	Mutation: {
+		addArticle: (
+			_: unknown,
+			{ title, content, author }: { title: string; content: string; author: string }
+		) => {
+			const newArticle = {
+				slug: title.toLocaleLowerCase().replace(/\s/g, '-'),
+				title,
+				content,
+				author
+			};
+			articles.push(newArticle);
+			return newArticle;
+		}
 	}
 };
 
