@@ -25,8 +25,21 @@ export type Article = {
 
 export type Query = {
   __typename?: 'Query';
+  articleBySlug?: Maybe<Article>;
   articles?: Maybe<Array<Maybe<Article>>>;
 };
+
+
+export type QueryArticleBySlugArgs = {
+  slug: Scalars['String'];
+};
+
+export type ArticleBySlugQueryVariables = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type ArticleBySlugQuery = { __typename?: 'Query', articleBySlug?: { __typename?: 'Article', title?: string | null, content?: string | null, author?: string | null } | null };
 
 export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -34,6 +47,15 @@ export type ArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 export type ArticlesQuery = { __typename?: 'Query', articles?: Array<{ __typename?: 'Article', title?: string | null, slug?: string | null, content?: string | null, author?: string | null } | null> | null };
 
 
+export const ArticleBySlugDocument = gql`
+    query ArticleBySlug($slug: String!) {
+  articleBySlug(slug: $slug) {
+    title
+    content
+    author
+  }
+}
+    `;
 export const ArticlesDocument = gql`
     query Articles {
   articles {
@@ -44,4 +66,5 @@ export const ArticlesDocument = gql`
   }
 }
     `;
+export type ArticleBySlugQueryStore = OperationStore<ArticleBySlugQuery, ArticleBySlugQueryVariables>;
 export type ArticlesQueryStore = OperationStore<ArticlesQuery, ArticlesQueryVariables>;
