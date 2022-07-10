@@ -1,11 +1,13 @@
 ## ** STEPS **
 
 #### Project setup
+
 npm init svelte@next gql
 
 ![With this configs](./screenshots/init-svelte.png)
 
 #### Tailwind Setup
+
 yarn add -D autoprefixer postcss-cli tailwindcss concurrently cross-env
 
 touch ./postcss.config.cjs
@@ -30,8 +32,27 @@ touch src/styles/tailwind.scss
 @tailwind utilities;
 ```
 
-#### Tailwind Setup
-touch ./postcss.config.cjs
+yarn dev
+
+#### Server Setup
+
+mkdir server
+
+cd server/
+
+yarn init -y
+
+yarn add typescript ts-node -D
+
+npx tsc --init
+
+yarn add apollo-server graphql
+
+touch index.ts
+
+#### GraphQL Generator setup
+
+in the root of the project:
 
 yarn add @graphql-codegen/cli -D
 
@@ -44,7 +65,9 @@ yarn add @graphql-codegen/typescript-urql @graphql-codegen/urql-introspection @g
 yarn add @urql/svelte urql graphql
 
 ```json
+{
   "scripts": {
     "generate": "grapql-codegen --config codegen.yml"
-  },
+  }
+}
 ```
